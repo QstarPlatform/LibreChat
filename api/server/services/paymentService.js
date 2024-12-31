@@ -89,7 +89,7 @@ const verifyPayment = async ({ authority }) => {
       }
 
       // Fetch the subscription plan
-      const subscriptionPlan = await SubscriptionPlan.findOne({id: paymentRecord.subscriptionPlanId});
+      const subscriptionPlan = await SubscriptionPlan.findById(paymentRecord.subscriptionPlanId).lean();
       if (!subscriptionPlan) {
         throw new Error('Subscription plan not found');
       }

@@ -112,5 +112,8 @@
       "admin/",
       "packages/"
     ]
+  },
+  "dependencies": {
+    "bun": "^1.1.42"
   }
 }

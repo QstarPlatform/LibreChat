@@ -88,6 +88,7 @@ async function buySubscriptionPlan(req, res) {
     // Initiate payment using paymentService
     const paymentResponse = await paymentService.initiatePayment({
       userId,
+      subscriptionPlanId: plan._id,
       amount: plan.price,
       description: `Purchase of subscription plan: ${plan.name}`,
       metadata: { planId: id, userId }, // Optional metadata,
