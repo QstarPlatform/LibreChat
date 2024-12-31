@@ -1,44 +1,41 @@
-# Dockerfile.multi
-# v0.7.5
+# v0.7.6
 
-# Base for all builds
-FROM node:20-alpine AS base
-WORKDIR /app
+# Base node image
+FROM node:20-alpine AS node
+
 RUN apk --no-cache add curl
-RUN npm config set fetch-retry-maxtimeout 600000 && \
-    npm config set fetch-retries 5 && \
-    npm config set fetch-retry-mintimeout 15000
-COPY package*.json ./
-COPY packages/data-provider/package*.json ./packages/data-provider/
-COPY client/package*.json ./client/
-COPY api/package*.json ./api/
-RUN npm ci
 
-# Build data-provider
-FROM base AS data-provider-build
-WORKDIR /app/packages/data-provider
-COPY packages/data-provider ./
-RUN npm run build
-RUN npm prune --production
-
-# Client build
-FROM base AS client-build
-WORKDIR /app/client
-COPY client ./
-COPY --from=data-provider-build /app/packages/data-provider/dist /app/packages/data-provider/dist
-ENV NODE_OPTIONS="--max-old-space-size=2048"
-RUN npm run build
-RUN npm prune --production
-
-# API setup (including client dist)
-FROM base AS api-build
+RUN mkdir -p /app && chown node:node /app
 WORKDIR /app
-COPY api ./api
-COPY config ./config
-COPY --from=data-provider-build /app/packages/data-provider/dist ./packages/data-provider/dist
-COPY --from=client-build /app/client/dist ./client/dist
-WORKDIR /app/api
-RUN npm prune --production
+
+USER node
+
+COPY --chown=node:node . .
+
+RUN \
+    # Allow mounting of these files, which have no default
+    touch .env ; \
+    # Create directories for the volumes to inherit the correct permissions
+    mkdir -p /app/client/public/images /app/api/logs ; \
+    npm config set fetch-retry-maxtimeout 600000 ; \
+    npm config set fetch-retries 5 ; \
+    npm config set fetch-retry-mintimeout 15000 ; \
+    npm install --no-audit; \
+    # React client build
+    NODE_OPTIONS="--max-old-space-size=2048" npm run frontend; \
+    npm prune --production; \
+    npm cache clean --force
+
+RUN mkdir -p /app/client/public/images /app/api/logs
+
+# Node API setup
 EXPOSE 3080
 ENV HOST=0.0.0.0
-CMD ["node", "server/index.js"]
+CMD ["npm", "run", "backend"]
+
+# Optional: for client with nginx routing
+# FROM nginx:stable-alpine AS nginx-client
+# WORKDIR /usr/share/nginx/html
+# COPY --from=node /app/client/dist /usr/share/nginx/html
+# COPY client/nginx.conf /etc/nginx/conf.d/default.conf
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]

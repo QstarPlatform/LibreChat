@@ -30,7 +30,7 @@ const localStorageAtoms = {
     true,
   ),
 
-  // Messages settings
+  // Chat settings
   enterToSend: atomWithLocalStorage('enterToSend', true),
   chatDirection: atomWithLocalStorage('chatDirection', 'RTL'),
   showCode: atomWithLocalStorage(LocalStorageKeys.SHOW_ANALYSIS_CODE, true),

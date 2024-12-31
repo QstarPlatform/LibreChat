@@ -18,6 +18,7 @@ const {
   updateFileUsage,
 } = require('./File');
 const {
+  getMessage,
   getMessages,
   saveMessage,
   recordMessage,
@@ -46,10 +47,18 @@ const {
   updateSubscription,    // CRUD method to update a subscription
   deleteSubscription,    // CRUD method to delete a subscription
 } = require('./Subscription'); // Import CRUD methods for Subscription
-const Session = require('./Session');
 const Balance = require('./Balance');
 const User = require('./User');
 const Key = require('./Key');
+const {
+  createSession,
+  findSession,
+  updateExpiration,
+  deleteSession,
+  deleteAllUserSessions,
+  generateRefreshToken,
+  countActiveSessions,
+} = require('./Session');
 const SubscriptionPlan = require('./SubscriptionPlan'); // SubscriptionPlan model
 const Payment = require('./Payment'); // Payment model
 const Subscription = require('./Subscription'); // Subscription model
@@ -72,6 +81,7 @@ module.exports = {
   getFiles,
   updateFileUsage,
 
+  getMessage,
   getMessages,
   saveMessage,
   recordMessage,
@@ -94,6 +104,14 @@ module.exports = {
   updateToken,
   deleteTokens,
 
+  createSession,
+  findSession,
+  updateExpiration,
+  deleteSession,
+  deleteAllUserSessions,
+  generateRefreshToken,
+  countActiveSessions,
+
   getSubscriptionPlans, // Export CRUD operations for SubscriptionPlan
   createSubscriptionPlan,
   updateSubscriptionPlan,
@@ -111,8 +129,8 @@ module.exports = {
 
   User,
   Key,
-  Session,
   Balance,
+
   SubscriptionPlan, // Export the SubscriptionPlan model
   Payment, // Export the Payment model
   Subscription, // Export the Subscription model
