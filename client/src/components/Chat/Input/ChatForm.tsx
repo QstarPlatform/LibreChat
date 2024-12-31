@@ -42,7 +42,7 @@ const ChatForm = ({ index = 0 }) => {
   const SpeechToText = useRecoilValue(store.speechToText);
   const TextToSpeech = useRecoilValue(store.textToSpeech);
   const automaticPlayback = useRecoilValue(store.automaticPlayback);
-  const maximizeChatSpace = useRecoilValue(store.maximizeChatSpace);
+  //const maximizeChatSpace = useRecoilValue(store.maximizeChatSpace);
 
   const isSearching = useRecoilValue(store.isSearching);
   const [showStopButton, setShowStopButton] = useRecoilState(store.showStopButtonByIndex(index));
@@ -145,7 +145,7 @@ const ChatForm = ({ index = 0 }) => {
       onSubmit={methods.handleSubmit((data) => submitMessage(data))}
       className={cn(
         'mx-auto flex flex-row gap-3 pl-2 transition-all duration-200 last:mb-2',
-        maximizeChatSpace ? 'w-full max-w-full' : 'md:max-w-2xl xl:max-w-3xl',
+        true ? 'w-full max-w-full' : 'md:max-w-2xl xl:max-w-3xl',
       )}
     >
       <div className="relative flex h-full flex-1 items-stretch md:flex-col">

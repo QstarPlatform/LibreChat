@@ -38,7 +38,6 @@ export default function Message(props: TMessageProps) {
     isSubmittingFamily,
   } = useMessageProcess({ message: props.message });
   const { message, currentEditId, setCurrentEditId } = props;
-  const maximizeChatSpace = useRecoilValue(store.maximizeChatSpace);
 
   if (!message || typeof message !== 'object') {
     return null;
@@ -54,7 +53,7 @@ export default function Message(props: TMessageProps) {
             <div
               className={cn(
                 'flex w-full flex-row flex-wrap justify-between gap-1 md:flex-nowrap md:gap-2',
-                maximizeChatSpace ? 'w-full max-w-full' : 'md:max-w-5xl xl:max-w-6xl',
+                true ? 'w-full max-w-full' : 'md:max-w-5xl xl:max-w-6xl',
               )}
             >
               <MessageRender

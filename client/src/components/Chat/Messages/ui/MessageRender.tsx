@@ -57,7 +57,7 @@ const MessageRender = memo(
       setCurrentEditId,
     });
     const fontSize = useRecoilValue(store.fontSize);
-    const maximizeChatSpace = useRecoilValue(store.maximizeChatSpace);
+    //const maximizeChatSpace = useRecoilValue(store.maximizeChatSpace);
     const handleRegenerateMessage = useCallback(() => regenerateMessage(), [regenerateMessage]);
     const { isCreatedByUser, error, unfinished } = msg ?? {};
     const hasNoChildren = !(msg?.children?.length ?? 0);
@@ -90,7 +90,7 @@ const MessageRender = memo(
     if (isCard ?? false) {
       layoutClasses =
         'relative w-full gap-1 rounded-lg border border-border-medium bg-surface-primary-alt p-2 md:w-1/2 md:gap-3 md:p-4';
-    } else if (maximizeChatSpace) {
+    } else if (true) {
       layoutClasses = 'md:max-w-full md:px-5';
     } else {
       layoutClasses = 'md:max-w-3xl md:px-5 lg:max-w-[40rem] lg:px-1 xl:max-w-[48rem] xl:px-5';
