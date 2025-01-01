@@ -14,7 +14,7 @@ registration:
 speech:
    stt:
        openai:
-         apiKey: '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'
+         apiKey: '${OPENAI_API_KEY}'
          model: 'whisper-1'
 
 fileConfig:
