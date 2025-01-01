@@ -63,20 +63,19 @@ registration:
   # allowedDomains:
   # - "gmail.com"
 
-# speech:
+speech:
 #   tts:
 #     openai:
-#       url: ''
 #       apiKey: '${TTS_API_KEY}'
 #       model: ''
 #       voices: ['']
 
 #  
-#   stt:
-#     openai:
-#       url: ''
-#       apiKey: '${STT_API_KEY}'
-#       model: ''
+   stt:
+     openai:
+       openai:
+         apiKey: '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'
+         model: 'whisper-1'
 
 # rateLimits:
 #   fileUploads:
